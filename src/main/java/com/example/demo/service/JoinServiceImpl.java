@@ -50,6 +50,6 @@ public class JoinServiceImpl implements JoinService{
 
     //获取符合条件的审批人，演示这里写死，使用应用使用实际代码
     public List<String> findUsers(DelegateExecution execution) {
-        return Arrays.asList("admin", "wtr");
+        return Arrays.asList("admin", "小孙","cm");
     }
 }

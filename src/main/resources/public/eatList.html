@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/jquery/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/comm.js" type="text/javascript" charset="utf-8"></script>
+    <title>Title</title>
+
+</head>
+<body>
+<input type="text" id="assignee" name="assignee"/>
+<input type="button" value="查询" onclick="selectTask()"/><br/>
+任务列表:<br/>
+<table border = "1">
+    <tr>
+        <td>流程名称</td>
+        <td>步骤名称</td>
+        <td>步骤提交时间</td>
+        <td>流程创建时间</td>
+        <td>申请人</td>
+        <td>历史操作</td>
+        <td>启动吃饭</td>
+    </tr>
+    <tbody id="taskList">
+    </tbody>
+</table>
+
+
+历史操作:<br/>
+<table border = "1">
+    <tr>
+    <td>流程名称</td>
+    <td>更新时间</td>
+    </tr>
+    <tbody id="histaskList">
+    </tbody>
+</table>
+<script type="text/javascript">
+
+    function selectTask(){
+        var val = $("#assignee").val();
+        if(comm.isNull(val)){
+            return;
+        }
+        $("#taskList").html("");
+        $.ajax({
+            type: 'post',
+            url: comm.getBasePath() + 'eat/tasks',
+            data: {assignee:$("#assignee").val()},
+            async: true,
+            dataType: 'json',
+            success: function (rt) {
+                if (!comm.isNull(rt)) {
+                    var data = rt;
+                    var html = "";
+                    for(var i = 0; i < data.length ; i ++){
+                        html += "<tr>";
+                        html += "<td>" +data[i].liuchengname+ "</td>";
+                        html += "<td>" +data[i].name+ "</td>";
+                        html += "<td>" +data[i].createTime+ "</td>";
+                        html += "<td>" +data[i].taskStartTime+ "</td>";
+                        html += "<td>" +data[i].startUserId+ "</td>";
+                        html += "<td><a href='javascript:selectHiTasksByProcDefId("+data[i].procInstId+")'>查看历史操作</a></td>";
+                        html += "<td><a href='javascript:doEat("+data[i].id+")'>开动!!</a></td>";
+                        html += "</tr>";
+                    }
+                    $("#taskList").html(html);
+                }
+            }
+        })
+    }
+
+    function selectHiTasksByProcDefId(id){
+        $.ajax({
+            type: 'post',
+            url: comm.getBasePath() + 'eat/hiTasksByProcDefId',
+            data: {assignee:id},
+            async: true,
+            dataType: 'json',
+            success: function (rt) {
+                if (!comm.isNull(rt)) {
+                    var data = rt;
+                    var html = "";
+                    for(var i = 0; i < data.length ; i ++){
+                        html += "<tr>";
+                        html += "<td>" +data[i].name+ "</td>";
+                        html += "<td>" +data[i].createTime+ "</td>";
+                        html += "</tr>";
+                    }
+                    $("#histaskList").html(html);
+                }
+            }
+        })
+    }
+
+    function doEat(taskId){
+        $.ajax({
+            type: 'post',
+            url: comm.getBasePath() + 'eat/doEat',
+            data: {
+                taskId:taskId
+            },
+            async: true,
+            dataType: 'json',
+            success: function (rt) {
+                alert("吃饭了");
+            }
+        })
+    }
+</script>
+</body>
+</html>

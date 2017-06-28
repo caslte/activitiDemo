@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,9 @@ public class ActivitiServiceImpl implements ActivitiService{
     @Autowired
     private TaskService taskService;
 
+    @Autowired
+    HistoryService historyService;
+
     //开始流程，传入申请者的id以及公司的id
     public void startProcess(Long personId, Long compId) {
         Map<String, Object> variables = new HashMap<String, Object>();
@@ -37,6 +42,11 @@ public class ActivitiServiceImpl implements ActivitiService{
     //获得某个人的任务别表
     public List<Task> getTasks(String assignee) {
         return taskService.createTaskQuery().taskCandidateUser(assignee).list();
+    }
+
+    //获得某个人的历史任务任务别表
+    public List<HistoricProcessInstance> getHistoryTasks(String assignee) {
+        return historyService.createHistoricProcessInstanceQuery().finished().processDefinitionId(assignee).list();
     }
 
     //完成任务

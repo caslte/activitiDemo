@@ -6,7 +6,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>springbootdemo2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>springbootdemo2</name>
 	<description>Demo project for Spring Boot</description>
@@ -35,10 +35,10 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<!--<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
-		</dependency>-->
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -71,6 +71,11 @@
 			<artifactId>pagehelper-spring-boot-starter</artifactId>
 			<version>1.1.1</version>
 		</dependency>
+		<!--<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>-->
 	</dependencies>
 
 	<build>

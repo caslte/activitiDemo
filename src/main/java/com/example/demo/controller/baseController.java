@@ -42,13 +42,11 @@ public class baseController
     }
 
     @RequestMapping(value = "/showPage")
-    public String showPage()
+    public ModelAndView showPage()
     {
-        ModelAndView mv = new ModelAndView();
-        //添加模型数据 可以是任意的POJO对象
-        mv.addObject("message", "Hello World!");
-        //设置逻辑视图名，视图解析器会根据该名字解析到具体的视图页面
-        mv.setViewName("index");
-        return "index";
+        ModelAndView result = new ModelAndView("index");
+        TestEntity t = testService.loadTest(2L);
+        System.out.println(t.getUserName());
+        return result;
     }
 }

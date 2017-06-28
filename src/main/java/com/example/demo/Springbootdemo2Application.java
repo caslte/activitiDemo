@@ -9,22 +9,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class Springbootdemo2Application
+public class Springbootdemo2Application extends SpringBootServletInitializer
 {
     @Autowired
     private CompMapper compMapper;
 
     @Autowired
     private PersonMapper personMapper;
+
+    private static Class<Springbootdemo2Application> applicationClass = Springbootdemo2Application.class;
     
     public static void main(String[] args)
     {
         SpringApplication.run(Springbootdemo2Application.class, args);
     }
-    
+
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application)
+    {
+        return application.sources(applicationClass);
+    }
     //初始化模拟数据
     @Bean
     public CommandLineRunner init(final ActivitiService myService)
