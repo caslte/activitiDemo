@@ -18,6 +18,7 @@
         <td>步骤提交时间</td>
         <td>流程创建时间</td>
         <td>申请人</td>
+        <td>流程图</td>
         <td>历史操作</td>
         <td>启动吃饭</td>
     </tr>
@@ -35,6 +36,9 @@
     <tbody id="histaskList">
     </tbody>
 </table>
+
+流程图:<br/>
+<img src="" id="lct"/>
 <script type="text/javascript">
 
     function selectTask(){
@@ -60,6 +64,7 @@
                         html += "<td>" +data[i].createTime+ "</td>";
                         html += "<td>" +data[i].taskStartTime+ "</td>";
                         html += "<td>" +data[i].startUserId+ "</td>";
+                        html += "<td><a href='javascript:selectImg("+data[i].procInstId+")'>查看流程图</a></td>";
                         html += "<td><a href='javascript:selectHiTasksByProcDefId("+data[i].procInstId+")'>查看历史操作</a></td>";
                         html += "<td><a href='javascript:doEat("+data[i].id+")'>开动!!</a></td>";
                         html += "</tr>";
@@ -106,6 +111,10 @@
                 alert("吃饭了");
             }
         })
+    }
+
+    function selectImg(procInstId){
+        $("#lct").attr("src",comm.getBasePath()+"eat/getImg?processInstanceId="+procInstId);
     }
 </script>
 </body>

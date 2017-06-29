@@ -5,6 +5,8 @@ import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.task.Task;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -29,6 +31,9 @@ public interface EatService {
     //根据流程实例ID ,查询当前总实例信息
     public HistoricProcessInstance getTaskProcessInstance(String piId);
 
+    //根据流程实例ID ,查询当前总实例信息
+    public List<HistoricProcessInstance> getstartUserTaskList(String startUserId);
+
     //检查通过
     public void checkEat(Boolean isEat, String taskId);
 
@@ -41,5 +46,8 @@ public interface EatService {
     List<String> getAdmins(DelegateExecution execution);
     //得到开饭人
     List<String> getKFAdmins(DelegateExecution execution);
-    
+
+    //打印流程图
+    void printProcessImg(String processInstanceId, HttpServletRequest request, HttpServletResponse response);
+
 }
